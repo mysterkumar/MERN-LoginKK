@@ -5,7 +5,7 @@ import { handleError, handleSuccess } from '../utils';
 
 function Signup() {
     const [signupInfo, setSignupInfo] = useState({
-        First_name: '', // Changed to match the server's expected format
+        First_name: '',
         Last_name: '',
         email: '',
         password: ''
@@ -15,19 +15,16 @@ function Signup() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value);
         const copySignupInfo = { ...signupInfo };
         copySignupInfo[name] = value;
         setSignupInfo(copySignupInfo);
     };
 
-    console.log('signupInfo -> ', signupInfo);
-
     const handleSignup = async (e) => {
         e.preventDefault();
         const { First_name, Last_name, email, password } = signupInfo;
         if (!First_name || !Last_name || !email || !password) {
-            return handleError('First name, last name, email, and password are required');
+            return handleError('All fields are required');
         }
         try {
             const url = `https://mern-login-kk-api.vercel.app/auth/signup`;
@@ -36,10 +33,15 @@ function Signup() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies if backend uses them
+                credentials: 'include',
                 body: JSON.stringify(signupInfo),
             });
-            
+
+            if (!response.ok) {
+                handleError(`Request failed with status ${response.status}`);
+                return;
+            }
+
             const result = await response.json();
             const { success, message, error } = result;
             if (success) {
@@ -48,12 +50,10 @@ function Signup() {
                     navigate('/login');
                 }, 1000);
             } else if (error) {
-                const details = error?.details[0]?.message;
-                handleError(details);
-            } else if (!success) {
+                handleError(error?.details[0]?.message || 'Something went wrong');
+            } else {
                 handleError(message);
             }
-            console.log(result);
         } catch (err) {
             handleError(err.message || 'Something went wrong');
         }
@@ -68,8 +68,7 @@ function Signup() {
                     <input
                         onChange={handleChange}
                         type='text'
-                        name='First_name' // Changed to match the server's expected format
-                        autoFocus
+                        name='First_name'
                         placeholder='Enter your first name...'
                         value={signupInfo.First_name}
                     />
@@ -79,7 +78,7 @@ function Signup() {
                     <input
                         onChange={handleChange}
                         type='text'
-                        name='Last_name' // Changed to match the server's expected format
+                        name='Last_name'
                         placeholder='Enter your last name...'
                         value={signupInfo.Last_name}
                     />
