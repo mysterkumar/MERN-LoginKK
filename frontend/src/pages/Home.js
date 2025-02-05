@@ -31,7 +31,12 @@ function Home() {
           'Authorization': localStorage.getItem('token')
         }
       };
-      const response = await fetch(url, headers);
+      const response = await fetch(url, {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        },
+    });
+    
       const result = await response.json();
       console.log("API response:", result);
       console.log("Type of result:", typeof result);

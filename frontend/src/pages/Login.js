@@ -34,10 +34,12 @@ function Login() {
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginInfo)
+                credentials: 'include', // Include cookies if backend uses them
+                body: JSON.stringify(loginInfo),
             });
+            
             const result = await response.json();
             const { success, message, jwtToken, name, error } = result;
             if (success) {

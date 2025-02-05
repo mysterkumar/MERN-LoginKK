@@ -34,10 +34,12 @@ function Signup() {
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(signupInfo)
+                credentials: 'include', // Include cookies if backend uses them
+                body: JSON.stringify(signupInfo),
             });
+            
             const result = await response.json();
             const { success, message, error } = result;
             if (success) {
