@@ -1,7 +1,7 @@
 const cors = require("cors");
 
 const corsOptions = {
-    origin: 'https://mern-login-kk-api.vercel.app/', // Frontend domain
+    origin: 'https://mern-login-kk-ui.vercel.app/', // Frontend domain
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
     credentials: true, // Allow cookies if needed
