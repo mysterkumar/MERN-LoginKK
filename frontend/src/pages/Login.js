@@ -20,6 +20,9 @@ function Login() {
         setLoginInfo(copyLoginInfo);
     }
 
+    //checking object for server
+    console.log('loginInfo -> ', loginInfo);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         const { email, password } = loginInfo;
@@ -27,7 +30,7 @@ function Login() {
             return handleError('email and password are required')
         }
         try {
-            const url = `https://deploy-mern-app-1-api.vercel.app/auth/login`;
+            const url = `http://localhost:8080/auth/login`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {

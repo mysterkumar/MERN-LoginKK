@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-    name: {
+// defining contraints against the taken from the user
+const UserSchema =  new Schema ({
+    First_name: {
+        type: String,
+        required: true,
+    },
+    Last_name: {
         type: String,
         required: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true
     },
     password: {
         type: String,
@@ -18,4 +22,4 @@ const UserSchema = new Schema({
 });
 
 const UserModel = mongoose.model('users', UserSchema);
-module.exports = UserModel;
+module.exports= UserModel;
